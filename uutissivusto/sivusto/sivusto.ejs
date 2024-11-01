@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Uutiset</title>
+		<link rel="stylesheet" href="/inc/style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<h1>Satuvaltakunnan tarinat</h1>
+				<h3>Uutisia lumotusta maasta</h3>
+			</header>
+
+			<div class="viiko">viikon sää - viikko <%= saa[0].vko %></div>
+			<div class="sää">
+				<% saa.forEach(saa => { %>
+				<div class="box">
+					<p id="pvm"><%= saa.pv %></p>
+					<p id="lampo"><%= saa.lampotila %>&deg;C</p>
+					<p>Säätila:</p>
+					<p><%= saa.saatila %></p>
+					<br />
+					<p>Tuulennopeus:</p>
+					<p><%= saa.tuulennopeus %> m/s</p>
+				</div>
+				<% }); %>
+			</div>
+
+			<div class="kaikki">
+				<div class="uutiset">
+					<% uutiset.slice(0, 2).forEach(uutis => { %>
+					<div class="uutinen">
+						<% const date = new Date(uutis.julkaisuaika); const options = {
+						weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric'
+						}; const formattedDate = date.toLocaleDateString('fi-FI', options);
+						%>
+						<p class="t1"><%= uutis.otsikko %></p>
+						<p class="t2"><%= formattedDate %></p>
+						<p class="t3"><%= uutis.sisalto %></p>
+					</div>
+					<% }); %>
+				</div>
+
+				<div class="taulukko">
+					<h3>Uusimmat uutiset</h3>
+					<% uutiset.slice(0, 5).forEach(uutis => { %>
+					<div class="uutinen_taulu">
+						<% const date = new Date(uutis.julkaisuaika); const options = {
+						weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric'
+						}; const formattedDate = date.toLocaleDateString('fi-FI', options);
+						%>
+						<p><%= uutis.otsikko %></p>
+						<p><%= formattedDate %></p>
+					</div>
+					<% }); %>
+
+					<h3>Vierailevat kirjoittajat</h3>
+					<% blogi.slice(0, 3).forEach(blog => { %>
+					<div class="blogi">
+						<% const date = new Date(blog.julkaisuaika); const options = {
+						weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric'
+						}; const formattedDate = date.toLocaleDateString('fi-FI', options);
+						%>
+						<p><%= blog.nimi %></p>
+						<p><%= blog.otsikko %></p>
+						<p><%= blog.kirjoittajat %></p>
+						<p><%= formattedDate %></p>
+					</div>
+					<% }); %>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
